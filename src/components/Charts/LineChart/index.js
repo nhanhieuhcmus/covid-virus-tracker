@@ -7,9 +7,17 @@ import {
     ButtonGroup,
     FormControl,
     InputLabel,
+    makeStyles,
     MenuItem,
     Select,
+    Typography,
 } from "@material-ui/core";
+
+const useStyles = makeStyles({
+    filterButton: {
+        marginRight: 0,
+    },
+});
 
 const generateOptions = (data) => {
     const formatedDate = data.map((item) =>
@@ -18,9 +26,12 @@ const generateOptions = (data) => {
     return {
         chart: {
             height: 500,
+            style:{
+                fontFamily: "Roboto"
+            }
         },
         title: {
-            text: "Number of confirmed",
+            text: undefined,
         },
         xAxis: {
             categories: formatedDate,
@@ -40,7 +51,7 @@ const generateOptions = (data) => {
             headerFormat:
                 '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat:
-                '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<tr><td style="color:{series.color};padding:0;font-size:"Roboto"">{series.name}: </td>' +
                 '<td style="padding:0"><b>{point.y} ca</b></td></tr>',
             footerFormat: "</table>",
             shared: true,
@@ -64,6 +75,7 @@ const generateOptions = (data) => {
 function LineChart({ data }) {
     const [options, setOptions] = useState({});
     const [filterType, setFilterType] = useState("");
+    const styles = useStyles();
     useEffect(() => {
         let customData;
         switch (filterType) {
@@ -78,7 +90,7 @@ function LineChart({ data }) {
                 break;
         }
         setOptions(generateOptions(customData));
-    }, [data,filterType]);
+    }, [data, filterType]);
 
     const handleOnChange = (event) => {
         console.log("filterType: ", event.target.value);
@@ -92,13 +104,11 @@ function LineChart({ data }) {
                 <Button>Last 30 days</Button>
                 <Button>Last 7 days</Button>
             </ButtonGroup> */}
-
-            <FormControl shrink size="small">
-                <InputLabel id="filter-type">All</InputLabel>
+            <FormControl align="center">
                 <Select
                     labelId="filter-type"
                     id="filter-type-select"
-                    // value={age}
+                    value={"all"}
                     onChange={handleOnChange}
                 >
                     <MenuItem value={"all"}>All</MenuItem>

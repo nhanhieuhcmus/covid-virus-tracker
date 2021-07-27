@@ -5,7 +5,7 @@ import HighlightCard from "./HighlightCard";
 function Highlight({ report }) {
     // console.log("Highlight - report: ", report);
     const data = report && report.length ? report[report.length - 1] : [];
-    console.log("Highlight - last data report:", data);
+    // console.log("Highlight - last data report:", data);
     const summary = [
         {
             title: "Confirmed",
@@ -23,7 +23,7 @@ function Highlight({ report }) {
             type: "deaths",
         },
     ];
-    console.log("Highlight - summary data:", summary[0]);
+    // console.log("Highlight - summary data:", summary[0]);
 
     return (
         <Grid container spacing={3}>

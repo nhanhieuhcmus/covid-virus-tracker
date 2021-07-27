@@ -1,9 +1,17 @@
-import { FormControl, InputLabel, NativeSelect } from "@material-ui/core";
+import { FormControl, InputLabel, makeStyles, NativeSelect } from "@material-ui/core";
 import React from "react";
 
+
+const useStyles = makeStyles((theme)=>({
+    formControl: {
+        margin: `${theme.spacing(3)}px 0`
+    }
+}))
+
 function CountrySelector({ value, handleOnChange, countries }) {
+    const styles = useStyles();
     return (
-        <FormControl>
+        <FormControl className={styles.formControl}>
             <InputLabel htmlFor="country-selector" shrink>
                 Select a country
             </InputLabel>
