@@ -2,9 +2,19 @@ import HighchartsReact from "highcharts-react-official";
 import Highchart from "highcharts";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
+import {
+    Button,
+    ButtonGroup,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+} from "@material-ui/core";
 
 const generateOptions = (data) => {
-    const formatedDate = data.map(item=>moment(item.Date).format('DD/MM/YYYY'));
+    const formatedDate = data.map((item) =>
+        moment(item.Date).format("DD/MM/YYYY")
+    );
     return {
         chart: {
             height: 500,
@@ -51,15 +61,52 @@ const generateOptions = (data) => {
     };
 };
 
-function LineChart({data}) {
+function LineChart({ data }) {
     const [options, setOptions] = useState({});
-    useEffect(()=>{
-        setOptions(generateOptions(data));
-    },[data]);
+    const [filterType, setFilterType] = useState("");
+    useEffect(() => {
+        let customData;
+        switch (filterType) {
+            case "30":
+                customData = data.slice(-30);
+                break;
+            case "7":
+                customData = data.slice(-7);
+                break;
+            default:
+                customData = data;
+                break;
+        }
+        setOptions(generateOptions(customData));
+    }, [data,filterType]);
 
+    const handleOnChange = (event) => {
+        console.log("filterType: ", event.target.value);
+        setFilterType(event.target.value);
+    };
 
     return (
         <div>
+            {/* <ButtonGroup size="small" style={{display: 'flex', justifyContent: 'flex-end'}}>
+                <Button >All data</Button>
+                <Button>Last 30 days</Button>
+                <Button>Last 7 days</Button>
+            </ButtonGroup> */}
+
+            <FormControl shrink size="small">
+                <InputLabel id="filter-type">All</InputLabel>
+                <Select
+                    labelId="filter-type"
+                    id="filter-type-select"
+                    // value={age}
+                    onChange={handleOnChange}
+                >
+                    <MenuItem value={"all"}>All</MenuItem>
+                    <MenuItem value={"30"}>Last 30 days</MenuItem>
+                    <MenuItem value={"7"}>Last 7 days</MenuItem>
+                </Select>
+            </FormControl>
+
             <HighchartsReact highcharts={Highchart} options={options} />
         </div>
     );
