@@ -10,13 +10,13 @@ const useStyles = makeStyles({
             return { borderLeft: "5px solid rgba(0,255,0,0.5)" };
         else return { borderLeft: "5px solid rgba(128,128,128,0.5)" };
     },
-    title: { fontSize: 18, marginBottom: 5 },
-    count: { fontWeight: "bold", fontSize: 18 },
+    title: { fontSize: 18},
+    count: { fontWeight: "bold", fontSize: 28, margin: '5px 0px'},
+    total: { fontSize: 16 },
 });
 
-function HighlightCard({ title, count, type }) {
+function HighlightCard({ title, count, total, type }) {
     const styles = useStyles({ type });
-    if (!count) return "Loading ...";
     // console.log("HighlightCard: ", {title,count,type});
     return (
         <Card className={styles.wrapper}>
@@ -34,6 +34,13 @@ function HighlightCard({ title, count, type }) {
                     className={styles.count}
                 >
                     <CountUp end={count || 0} duration={1.5} separator="," />
+                </Typography>
+                <Typography
+                    variant="body2"
+                    component="p"
+                    className={styles.total}
+                >
+                    <CountUp end={total || 0} duration={1.5} separator="," />
                 </Typography>
             </CardContent>
         </Card>
