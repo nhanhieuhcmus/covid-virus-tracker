@@ -5,10 +5,10 @@ import React from "react";
 const useStyles = makeStyles({
     wrapper: (props) => {
         if (props.type === "confirmed")
-            return { borderLeft: "5px solid #c9302c" };
+            return { borderLeft: "5px solid rgba(255,0,0,0.5)" };
         if (props.type === "recovered")
-            return { borderLeft: "5px solid #28a745" };
-        else return { borderLeft: "5px solid gray" };
+            return { borderLeft: "5px solid rgba(0,255,0,0.5)" };
+        else return { borderLeft: "5px solid rgba(128,128,128,0.5)" };
     },
     title: { fontSize: 18, marginBottom: 5 },
     count: { fontWeight: "bold", fontSize: 18 },
@@ -16,6 +16,7 @@ const useStyles = makeStyles({
 
 function HighlightCard({ title, count, type }) {
     const styles = useStyles({ type });
+    if (!count) return "Loading ...";
     // console.log("HighlightCard: ", {title,count,type});
     return (
         <Card className={styles.wrapper}>
