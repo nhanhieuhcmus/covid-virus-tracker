@@ -5,14 +5,24 @@ import React from "react";
 const useStyles = makeStyles({
     wrapper: (props) => {
         if (props.type === "confirmed")
-            return { borderLeft: "5px solid rgba(255,0,0,0.5)" };
+            return {
+                borderLeft: "10px solid rgba(255,0,0,0.5)",
+                borderRadius: 15,
+            };
         if (props.type === "recovered")
-            return { borderLeft: "5px solid rgba(0,255,0,0.5)" };
-        else return { borderLeft: "5px solid rgba(128,128,128,0.5)" };
+            return {
+                borderLeft: "10px solid rgba(0,255,0,0.5)",
+                borderRadius: 15,
+            };
+        else
+            return {
+                borderLeft: "10px solid rgba(128,128,128,0.5)",
+                borderRadius: 15,
+            };
     },
-    title: { fontSize: 18},
-    count: { fontWeight: "bold", fontSize: 28, margin: '5px 0px'},
-    total: { fontSize: 16 },
+    title: { fontSize: 18 },
+    total: { fontWeight: "bold", fontSize: 28, margin: "5px 0px" },
+    count: { fontSize: 16 },
 });
 
 function HighlightCard({ title, count, total, type }) {
@@ -25,22 +35,23 @@ function HighlightCard({ title, count, total, type }) {
                     variant="body2"
                     component="p"
                     className={styles.title}
+                    color="textSecondary"
                 >
                     {title}
                 </Typography>
                 <Typography
                     variant="body2"
                     component="span"
-                    className={styles.count}
+                    className={styles.total}
                 >
-                    <CountUp end={count || 0} duration={1.5} separator="," />
+                    <CountUp end={total || 0} duration={1.5} separator="," />
                 </Typography>
                 <Typography
                     variant="body2"
                     component="p"
-                    className={styles.total}
+                    className={styles.count}
                 >
-                    <CountUp end={total || 0} duration={1.5} separator="," />
+                    + <CountUp end={count || 0} duration={1.5} separator="," />
                 </Typography>
             </CardContent>
         </Card>

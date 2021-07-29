@@ -2,11 +2,12 @@ import { Container, Typography } from "@material-ui/core";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { getCountries, getReportByCountry } from "./apis";
-import CountrySelector from "./components/CountrySelector";
-import Highlight from "./components/Highlight";
-import Summary from "./components/Summary";
+import CountryPicker from "./components/CountryPicker/CountryPicker";
+import Highlight from "./components/Highlight/Highlight";
+import Summary from "./components/Summary/Summary";
 import "@fontsource/roboto";
-import MultiCountrySearch from "./components/MultiCountrySearch";
+import styles from "./App.module.css";
+import logo from "./images/logo.png";
 
 function App() {
     const [countries, setCountries] = useState([]);
@@ -35,7 +36,6 @@ function App() {
             console.log("event: ", event.target.value);
             console.log("value: ", value.ISO2.toLowerCase());
         }
-        // setSelectedCountryId("User click new search button: ", value.ISO2.toLowerCase());
     };
 
     useEffect(() => {
@@ -47,13 +47,12 @@ function App() {
             const selectedCountry = countries.find(
                 (country) => country.ISO2.toLowerCase() === selectedCountryId
             );
-              
-              setSelectedCountry(selectedCountry.Country);
+
+            setSelectedCountry(selectedCountry.Country);
 
             // call API
             getReportByCountry(selectedCountry.Slug).then((res) => {
-                // delete the last item because it has not updated till end of the day
-                console.log("getReportByCountry: ", res);
+                console.log("getReportByCountry: ", res); // delete the last item because it has not updated till end of the day
                 res.data.pop();
                 setReport(res.data);
             });
@@ -62,20 +61,23 @@ function App() {
 
     return (
         <Container style={{ marginTop: 20 }}>
-            <Typography variant="h2" component="h2">
-                COVID-19 TRACKER
-            </Typography>
-            <Typography>{moment().format("LLL")}</Typography>
-            {/* <CountrySelector
-                value={selectedCountryId}
-                countries={countries}
-                handleOnChange={handleOnChange}
-            /> */}
-            <MultiCountrySearch
-                // value={selectedCountry}
-                countries={countries}
-                handleChange={handleChange}
-            />
+            <div className={styles.header}>
+                <div className={styles.title}>
+                    <img
+                        className={styles.logo}
+                        src={logo}
+                        alt="logo"
+                    />
+                </div>
+                <Typography>{moment().format("LLL")}</Typography>
+
+                <CountryPicker
+                    // value={selectedCountry}
+                    countries={countries}
+                    handleChange={handleChange}
+                />
+            </div>
+
             <Highlight report={report} />
             <Summary report={report} />
         </Container>
