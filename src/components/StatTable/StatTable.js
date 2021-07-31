@@ -88,8 +88,8 @@ function StatTable({ rowsData }) {
     const styles = useStyles();
     return (
         <Card className={styles.card}>
-            <CardContent>
-                <Table className={styles.table} stickyHeader>
+            <CardContent style={{paddingTop:0}}>
+                <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
                             <StyledTableHead></StyledTableHead>
