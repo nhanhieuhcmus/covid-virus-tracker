@@ -1,85 +1,99 @@
 import { Container, Typography } from "@material-ui/core";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { getCountries, getReportByCountry } from "./apis";
+import {
+    getCountries,
+    getHistoricalCountry,
+    getReportByCountry,
+} from "./apis";
 import CountryPicker from "./components/CountryPicker/CountryPicker";
 import Highlight from "./components/Highlight/Highlight";
 import Summary from "./components/Summary/Summary";
 import "@fontsource/roboto";
 import styles from "./App.module.css";
 import logo from "./images/logo.png";
+import StatTable from "./components/StatTable/StatTable";
 
 function App() {
     const [countries, setCountries] = useState([]);
-    const [selectedCountry, setSelectedCountry] = useState("");
     const [selectedCountryId, setSelectedCountryId] = useState("");
     const [report, setReport] = useState([]);
-
+    const [historicalCountry, setHistoricalCountry] = useState([]);
+    const [lastestCountries, setLastestCountries] = useState([]);
     useEffect(() => {
+        console.log("useEffect all countries call");
         getCountries().then((res) => {
-            setCountries(res.data);
-
-            // default selection
-            setSelectedCountryId("vn");
+            console.log("all countries data: ", res);
+            // const alphabetCountries = sortBy(res.data, "Country"); // sort to alphabet order
+            const destructureCountries = res.data.map((country) => ({
+                name: country.country,
+                value: country.countryInfo.iso2,
+            }));
+            // console.log("destructureCountries: ", destructureCountries);
+            setCountries(destructureCountries);
+            // // default selection
+            setSelectedCountryId("vn"); // default selection
+            const destructureLastestCountries = res.data.map(
+                ({country,countryInfo:{flag} ,cases, recovered, deaths, todayCases, todayRecovered, todayDeaths}) => ({
+                    country,
+                    flag,
+                    cases,
+                    recovered,
+                    deaths,
+                    todayCases,
+                    todayRecovered,
+                    todayDeaths
+                })
+            );
+            // console.log("destructureLastestCountries: ", destructureLastestCountries);
+            setLastestCountries(destructureLastestCountries);
         });
+        console.log("useEffect all countries done");
     }, []);
 
-    // const handleOnChange = (event) => {
-    //     setSelectedCountryId(event.target.value);
-    //     console.log("User click: ", event.target.value);
-    // };
-
     // for new search button
-    const handleChange = (event, value) => {
-        if (value) {
-            setSelectedCountryId(value.ISO2.toLowerCase());
-            console.log("event: ", event.target.value);
-            console.log("value: ", value.ISO2.toLowerCase());
-        }
+    const handleCountryChange = (event, value) => {
+        // if (value)
+        setSelectedCountryId(value.value);
+        console.log("event: ", event.target.value);
+        console.log("value: ", value.value);
     };
 
     useEffect(() => {
+        console.log("useEffect one country call");
         if (selectedCountryId) {
-            // const { Slug } = countries.find(
-            //     (country) => country.ISO2.toLowerCase() === selectedCountryId
-            // );
-
-            const selectedCountry = countries.find(
-                (country) => country.ISO2.toLowerCase() === selectedCountryId
-            );
-
-            setSelectedCountry(selectedCountry.Country);
-
-            // call API
-            getReportByCountry(selectedCountry.Slug).then((res) => {
-                console.log("getReportByCountry: ", res); // delete the last item because it has not updated till end of the day
-                res.data.pop();
+            // call lastest report of specific country
+            getReportByCountry(selectedCountryId).then((res) => {
+                console.log("getReportByCountry: ", res);
                 setReport(res.data);
             });
+
+            // call historial of specific country
+            getHistoricalCountry(selectedCountryId).then((res) => {
+                console.log("getHistoricalCountry: ", res.data);
+                setHistoricalCountry(res.data);
+            });
         }
-    }, [countries, selectedCountryId]);
+        console.log("useEffect one country done");
+    }, [selectedCountryId,countries]);
+
 
     return (
-        <Container style={{ marginTop: 20 }}>
+        <Container className={styles.container}>
             <div className={styles.header}>
-                <div className={styles.title}>
-                    <img
-                        className={styles.logo}
-                        src={logo}
-                        alt="logo"
-                    />
-                </div>
+                <img className={styles.logo} src={logo} alt="logo" />
                 <Typography>{moment().format("LLL")}</Typography>
 
                 <CountryPicker
-                    // value={selectedCountry}
+                    selectedCountryId={selectedCountryId}
                     countries={countries}
-                    handleChange={handleChange}
+                    handleCountryChange={handleCountryChange}
                 />
             </div>
 
             <Highlight report={report} />
-            <Summary report={report} />
+            <Summary historicalCountry={historicalCountry} report={report}/>
+            <StatTable rowsData = {lastestCountries} />
         </Container>
     );
 }

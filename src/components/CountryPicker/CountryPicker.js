@@ -16,20 +16,31 @@ const useStyles = makeStyles({
     search: {
         position: "absolute",
         right: 10,
+        opacity: 0.7
     },
     input: {
-        "& input:valid fieldset": {
-            borderRadius: 50,
-        },
+        // `&[fieldset]`: {
+        //     borderRadius: 50,
+        // },
         width: 300,
         margin: "10px 0",
         backgroundColor: "white",
     },
 });
 
-export default function CountryPicker({ value, handleChange, countries }) {
+export default function CountryPicker({ selectedCountryId, handleCountryChange, countries }) {
+    console.log("CountryPicker render");
     const styles = useStyles();
-    console.log("MultiCountrySearch: ", countries);
+    // const defaultValue = countries.map(country=>country.ISO2.toLowerCase()===selectedCountryId);
+    const hardcodeDefaultValue = {
+        name: "Vietnam",
+        value: "VN",
+    };
+    // console.log("CountryPicker received from props: ", countries);
+    // if (defaultValue){
+    //     console.log("defaultValue: ", defaultValue, Object.keys(defaultValue).length);
+    // }
+    // console.log("defaultValue hardcode: ", hardcodeDefaultValue,Object.keys(hardcodeDefaultValue).length);
     // const countries
     // const handleChange = (event,value) => {
     //     console.log("event: ", event.target.value);
@@ -41,18 +52,16 @@ export default function CountryPicker({ value, handleChange, countries }) {
             <SearchIcon className={styles.search} />
             <Autocomplete
                 className={styles.input}
-                // value={value}
-                defaultValue={{
-                    Country: "Viet Nam",
-                    ISO2: "VN",
-                    Slug: "vietnam",
-                }}
+                defaultValue = {hardcodeDefaultValue}
                 id="combo-box-demo"
                 freeSolo
                 disableClearable
+                clearOnEscape
+                selectOnFocus
+                fullWidth
                 options={countries}
-                getOptionLabel={(option) => (option ? option.Country : "")}
-                onChange={handleChange}
+                getOptionLabel={(option) => (option ? option.name : "")}
+                onChange={handleCountryChange}
                 renderInput={(params) => (
                     <TextField
                         {...params}
@@ -65,4 +74,9 @@ export default function CountryPicker({ value, handleChange, countries }) {
             />
         </div>
     );
+}
+
+// insert from HoleTex
+CountryPicker.defaultProps = {
+    countries: [],
 }

@@ -3,11 +3,9 @@ body {
     background-color: #f5f6f8;
 }
 
-/* .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-} */
+.container {
+    margin-top: 5px;
+}
 
 .header {
    display: flex;
@@ -17,12 +15,11 @@ body {
 }
 
 .logo {
-    width: 400px;
+    width: 350px;
 }
 
-
-.title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+@media(max-width:770px){
+    .logo {
+        width: 200px;
+    }
 }

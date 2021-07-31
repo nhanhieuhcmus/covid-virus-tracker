@@ -12,18 +12,8 @@ import {
     Typography,
 } from "@material-ui/core";
 
-const useStyles = makeStyles({
-    container: {
-        borderRadius: 15,
-    },
-    
-    filter: {
-        
-    }
-});
-
 const generateOptions = (data) => {
-    const formatedDate = data.map((item) =>
+    const formatedDate = data.length&&data.map((item) =>
         moment(item.Date).format("DD/MM/YYYY")
     );
     return {
@@ -91,13 +81,18 @@ const generateOptions = (data) => {
                 color: "rgba(128,128,128,0.6)",
             },
         ],
+        credits: {
+            enabled: false,
+        },
     };
 };
 
 function LineChart({ data }) {
     const [options, setOptions] = useState({});
-    const [filterType, setFilterType] = useState("");
-    const styles = useStyles();
+    const [filterType, setFilterType] = useState("30");
+    useEffect(()=>{
+        setFilterType("30");
+    },[data])
     useEffect(() => {
         let customData;
         switch (filterType) {
@@ -120,13 +115,13 @@ function LineChart({ data }) {
     };
 
     return (
-        <Card className={styles.container}>
+        <Card>
             <CardContent>
-                <FormControl className={styles.filter} align="right">
+                <FormControl align="right">
                     <Select
                         labelId="filter-type"
                         id="filter-type-select"
-                        value={filterType || "all"}
+                        value={filterType}
                         onChange={handleOnChange}
                     >
                         <MenuItem value={"all"}>All the time</MenuItem>

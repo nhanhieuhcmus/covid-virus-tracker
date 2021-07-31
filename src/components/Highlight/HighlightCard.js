@@ -4,20 +4,24 @@ import React from "react";
 
 const useStyles = makeStyles({
     wrapper: (props) => {
+        const Styles = {
+            textAlign: "center",
+            borderLeft: "10px solid",
+            // boxShadow: "0 8px 16px 0 #BDC9D7",
+            boxShadow: "0 8px 32px -12px rgba(0,0,0,0.3)",
+            "&:hover": {
+                boxShadow: "0 16px 70px -12.125px rgba(0,0,0,0.3)"
+              },   
+            // overflow: "hidden",
+        };
         if (props.type === "confirmed")
-            return {
-                borderLeft: "10px solid rgba(255,0,0,0.5)",
-                borderRadius: 15,
-            };
+            return { ...Styles, borderColor: "rgba(255,0,0,0.5)" };
         if (props.type === "recovered")
-            return {
-                borderLeft: "10px solid rgba(0,255,0,0.5)",
-                borderRadius: 15,
-            };
+            return { ...Styles, borderColor: "rgba(0,255,0,0.5)" };
         else
             return {
-                borderLeft: "10px solid rgba(128,128,128,0.5)",
-                borderRadius: 15,
+                ...Styles,
+                borderColor: "rgba(128,128,128,0.5)",
             };
     },
     title: { fontSize: 18 },
@@ -25,7 +29,7 @@ const useStyles = makeStyles({
     count: { fontSize: 16 },
 });
 
-function HighlightCard({ title, count, total, type }) {
+function HighlightCard({ title, total, today, type }) {
     const styles = useStyles({ type });
     // console.log("HighlightCard: ", {title,count,type});
     return (
@@ -51,7 +55,7 @@ function HighlightCard({ title, count, total, type }) {
                     component="p"
                     className={styles.count}
                 >
-                    + <CountUp end={count || 0} duration={1.5} separator="," />
+                    + <CountUp end={today || 0} duration={1.5} separator="," />
                 </Typography>
             </CardContent>
         </Card>

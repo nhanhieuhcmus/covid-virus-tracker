@@ -3,31 +3,27 @@ import React from "react";
 import HighlightCard from "./HighlightCard";
 
 function Highlight({ report }) {
-    // console.log("Highlight - report: ", report);
-    const data = report && report.length ? report[report.length - 1] : [];
-    const prevData = report && report.length ? report[report.length - 2]: []; 
-    // console.log("Highlight - last data report:", data);
+    console.log("Highlight render");
     const summary = [
         {
             title: "Confirmed",
-            count: data.Confirmed,
-            prevCount: prevData.Confirmed,
+            total: report.cases,
+            today: report.todayCases,
             type: "confirmed",
         },
         {
             title: "Recovered",
-            count: data.Recovered,
-            prevCount: prevData.Recovered,
+            total: report.recovered,
+            today: report.todayRecovered,
             type: "recovered",
         },
         {
             title: "Deaths",
-            count: data.Deaths,
-            prevCount: prevData.Deaths,
+            total: report.deaths,
+            today: report.todayDeaths,
             type: "deaths",
         },
     ];
-    // console.log("Highlight - summary data:", summary[0]);
 
     return (
         <Grid container spacing={3}>
@@ -35,8 +31,8 @@ function Highlight({ report }) {
                 <Grid item sm={4} xs={12} key={item.type}>
                     <HighlightCard
                         title={item.title}
-                        count={item.count-item.prevCount}
-                        total = {item.count}
+                        total = {item.total}
+                        today={item.today}
                         type={item.type}
                     />
                 </Grid>

@@ -1,13 +1,13 @@
 import { Card, CardContent } from "@material-ui/core";
 import HighchartsReact from "highcharts-react-official";
 import Highchart from "highcharts";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-const generateOptions = () => {
+const generateOptions = (data) => {
     return {
         chart: {
             type: "pie",
-            height: 400,
+            height: 424,
             style: {
                 fontFamily: "Roboto",
             },
@@ -28,26 +28,35 @@ const generateOptions = () => {
                     enabled: false,
                 },
                 showInLegend: true,
+                series: {
+                    animation: {
+                        duration: 1500,
+                    },
+                    fillOpacity: 0.2,
+                },
             },
         },
         series: [
             {
-                name: "Brands",
+                name: "Rate",
                 colorByPoint: true,
                 data: [
                     {
-                        name: "Chrome",
-                        y: 61.41,
-                        sliced: true,
-                        selected: true,
+                        name: "Confirmed",
+                        y: data.cases,
+                        // sliced: false,
+                        selected: false,
+                        color: "rgba(255,0,0,0.6)",
                     },
                     {
-                        name: "Internet Explorer",
-                        y: 11.84,
+                        name: "Recovered",
+                        y: data.recovered,
+                        color: "rgba(0,255,0,0.6)",
                     },
                     {
-                        name: "Firefox",
-                        y: 10.85,
+                        name: "Deaths",
+                        y: data.deaths,
+                        color: "rgba(128,128,128,0.6)",
                     },
                 ],
             },
@@ -60,15 +69,19 @@ const generateOptions = () => {
 };
 
 function PieChart({ data }) {
-    // const [options, setOptions] = useState({});
-    // useEffect(() => {
-    //     setOptions(generateOptions(data));
-    // }, [data]);
+    console.log("data in PieChart: ", data);
+    const [options, setOptions] = useState({});
+    useEffect(() => {
+        setOptions(generateOptions(data));
+    }, [data]);
 
     return (
         <Card>
             <CardContent>
-                <HighchartsReact highcharts={Highchart} options={generateOptions} />
+                <HighchartsReact
+                    highcharts={Highchart}
+                    options={options}
+                />
             </CardContent>
         </Card>
     );

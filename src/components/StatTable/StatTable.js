@@ -7,6 +7,7 @@ import {
     TableCell,
     TableHead,
     TableRow,
+    Typography,
 } from "@material-ui/core";
 import React from "react";
 
@@ -14,8 +15,18 @@ const useStyles = makeStyles({
     card: {
         marginTop: 20,
         maxHeight: 500,
-        overflow: 'scroll'
-    }
+        overflow: "scroll",
+    },
+    country: {
+        display: 'flex',
+        alignItems: 'center', 
+    },
+    flag: {
+        height: 50,
+        width: 80,
+        marginRight: 10,
+    },
+    
 });
 
 function StatTable({ rowsData }) {
@@ -33,20 +44,39 @@ function StatTable({ rowsData }) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rowsData.map(({Country, NewConfirmed, NewRecovered, NewDeaths}) => (
-                            <TableRow key={Country}>
-                                <TableCell component="th" scope="row">
-                                    {Country}
-                                </TableCell>
-                                <TableCell align="right">
-                                    {NewConfirmed}
-                                </TableCell>
-                                <TableCell align="right">
-                                    {NewRecovered}
-                                </TableCell>
-                                <TableCell align="right">{NewDeaths}</TableCell>
-                            </TableRow>
-                        ))}
+                        {rowsData.map(
+                            ({
+                                country,
+                                flag,
+                                cases,
+                                recovered,
+                                deaths,
+                                todayCases,
+                                todayRecovered,
+                                todayDeaths,
+                            }) => (
+                                <TableRow className={styles.row} key={country}>
+                                    <TableCell className={styles.country} component="th" scope="row">
+                                       <img src={flag} className={styles.flag}/>
+                                        {country}
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {cases}
+                                        <Typography>+ {todayCases}</Typography>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {recovered}
+                                        <Typography>
+                                            + {todayRecovered}
+                                        </Typography>
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {deaths}
+                                        <Typography>+ {todayDeaths}</Typography>
+                                    </TableCell>
+                                </TableRow>
+                            )
+                        )}
                     </TableBody>
                 </Table>
             </CardContent>
