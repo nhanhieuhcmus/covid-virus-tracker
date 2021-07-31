@@ -54,6 +54,7 @@ export default function CountryPicker({ selectedCountryId, handleCountryChange, 
                 className={styles.input}
                 defaultValue = {hardcodeDefaultValue}
                 id="combo-box-demo"
+                includeInputInList
                 blurOnSelect
                 clearOnBlur
                 freeSolo
