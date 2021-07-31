@@ -75,6 +75,7 @@ const useStyles = makeStyles({
     "@media (max-width:550px)": {
         flag: {
             display: "none",
+            padding: 0
         },
         column: {
             padding: 0,
@@ -92,7 +93,7 @@ function StatTable({ rowsData }) {
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableHead></StyledTableHead>
+                            <StyledTableHead ></StyledTableHead>
                             <StyledTableHead className={styles.column}>
                                 Country
                             </StyledTableHead>
