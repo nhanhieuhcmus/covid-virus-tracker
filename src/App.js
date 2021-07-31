@@ -14,6 +14,7 @@ import styles from "./App.module.css";
 import logo from "./images/logo.png";
 import StatTable from "./components/StatTable/StatTable";
 import Footer from "./components/Footer/Footer";
+import ScrollTop from "./components/ScrollTop/ScrollTop";
 
 function App() {
     const [countries, setCountries] = useState([]);
@@ -95,6 +96,7 @@ function App() {
             <Highlight report={report} />
             <Summary historicalCountry={historicalCountry} report={report}/>
             <StatTable rowsData = {lastestCountries} />
+            <ScrollTop/>
             <Footer/>
         </Container>
     );

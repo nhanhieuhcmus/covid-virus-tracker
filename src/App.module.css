@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     /* background-color: rgb(250,250,250); */
     background-color: #f5f6f8;
