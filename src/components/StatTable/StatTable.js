@@ -30,6 +30,12 @@ const StyledTableHead = withStyles((theme) => ({
     body: {
         fontSize: 14,
     },
+    "@media (max-width:550px)": {
+        head: {
+            fontSize: 14,
+            fontWeight: 800,
+        },
+    },
 }))(TableCell);
 
 const useStyles = makeStyles({
@@ -40,7 +46,6 @@ const useStyles = makeStyles({
     },
     table: {},
 
-    column: {},
     flag: {
         height: 50,
         width: 80,
@@ -66,21 +71,18 @@ const useStyles = makeStyles({
         color: "#718096",
         fontSize: 13,
     },
-    "@media (max-width:780px)": {
-        // column: {
-        //     padding: 0,
-        //     margin: 0,
-        // }
-    },
+    // "@media (max-width:780px)": {
+
+    // },
     "@media (max-width:550px)": {
         flag: {
             display: "none",
-            padding: 0
+            padding: 0,
         },
         column: {
             padding: 0,
             margin: 0,
-            maxWidth: 60,
+            maxWidth: 50,
         },
     },
 });
@@ -89,11 +91,13 @@ function StatTable({ rowsData }) {
     const styles = useStyles();
     return (
         <Card className={styles.card}>
-            <CardContent style={{paddingTop:0}}>
+            <CardContent style={{ paddingTop: 0 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableHead ></StyledTableHead>
+                            <StyledTableHead
+                                className={styles.flag}
+                            ></StyledTableHead>
                             <StyledTableHead className={styles.column}>
                                 Country
                             </StyledTableHead>
@@ -111,8 +115,8 @@ function StatTable({ rowsData }) {
                     <TableBody>
                         {rowsData.map(
                             ({
-                                country,
                                 flag,
+                                country,
                                 cases,
                                 recovered,
                                 deaths,
@@ -121,11 +125,8 @@ function StatTable({ rowsData }) {
                                 todayDeaths,
                             }) => (
                                 <StyledTableRow key={country}>
-                                    <TableCell>
-                                        <img
-                                            src={flag}
-                                            className={styles.flag}
-                                        />
+                                    <TableCell className={styles.flag}>
+                                        <img src={flag} className={styles.flag}/>
                                     </TableCell>
                                     <TableCell
                                         className={styles.column}
