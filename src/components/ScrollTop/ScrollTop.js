@@ -5,7 +5,7 @@ const useStyles = makeStyles({
     myBtn: {
         display: 'none',
         position: 'fixed',
-        bottom: 20,
+        bottom: 50,
         right: 30,
         zIndex: 9,
         fontSize: 14,

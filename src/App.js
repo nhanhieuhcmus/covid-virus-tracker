@@ -47,7 +47,7 @@ function App() {
                     todayDeaths
                 })
             );
-            // console.log("destructureLastestCountries: ", destructureLastestCountries);
+            console.log("destructureLastestCountries: ", destructureLastestCountries);
             setLastestCountries(destructureLastestCountries);
         });
         console.log("useEffect all countries done");
