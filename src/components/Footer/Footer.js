@@ -11,7 +11,8 @@ const useStyles = makeStyles({
         textAlign: "center",
         '& a':{
             textDecoration: 'none',
-        }
+            color: '#000',
+        },
     },
     heart: {
         marginLeft: 5,
@@ -25,8 +26,8 @@ function Footer() {
     return (
         <div className={styles.footer}>
             <Typography>
-                Designed by
-                <b> <a href="https://www.facebook.com/nhan.hieu.hcmus"> Nhan </a> </b>
+                Designed by 
+                <b> <a href="https://www.facebook.com/nhan.hieu.hcmus">Nhan</a> </b>
                 with
                 <span className={styles.heart}>
                     {/* &hearts; */}

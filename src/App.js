@@ -11,7 +11,7 @@ import Highlight from "./components/Highlight/Highlight";
 import Summary from "./components/Summary/Summary";
 import "@fontsource/roboto";
 import styles from "./App.module.css";
-import logo from "./images/logo.png";
+// import logo from "./images/logo.png";
 import StatTable from "./components/StatTable/StatTable";
 import Footer from "./components/Footer/Footer";
 import ScrollTop from "./components/ScrollTop/ScrollTop";
@@ -83,7 +83,7 @@ function App() {
     return (
         <Container className={styles.container}>
             <div className={styles.header}>
-                <img className={styles.logo} src={logo} alt="logo" />
+                <img className={styles.logo} src="https://drive.google.com/uc?view&id=1bwfj4jVjGBBuARbu7j8Xo8nx0kVrgkML" alt="logo" />
                 <Typography>{moment().format("LLL")}</Typography>
 
                 <CountryPicker
