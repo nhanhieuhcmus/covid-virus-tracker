@@ -5,6 +5,7 @@ import {
     getCountries,
     getHistoricalCountry,
     getReportByCountry,
+    getVaccineData,
 } from "./apis";
 import CountryPicker from "./components/CountryPicker/CountryPicker";
 import Highlight from "./components/Highlight/Highlight";
@@ -15,6 +16,7 @@ import styles from "./App.module.css";
 import StatTable from "./components/StatTable/StatTable";
 import Footer from "./components/Footer/Footer";
 import ScrollTop from "./components/ScrollTop/ScrollTop";
+import VaccineTable from "./components/VaccineTable/VaccineTable";
 
 function App() {
     const [countries, setCountries] = useState([]);
@@ -22,6 +24,7 @@ function App() {
     const [report, setReport] = useState([]);
     const [historicalCountry, setHistoricalCountry] = useState([]);
     const [lastestCountries, setLastestCountries] = useState([]);
+    const [vaccineData, setVaccineData] = useState([]);
     useEffect(() => {
         console.log("useEffect all countries call");
         getCountries().then((res) => {
@@ -76,6 +79,12 @@ function App() {
                 setHistoricalCountry(res.data);
             });
         }
+        if (selectedCountryId==="vn"){
+            getVaccineData().then(res=>{
+                console.log("getVaccineData: ", res);
+                setVaccineData(res.data);
+            });
+        }
         console.log("useEffect one country done");
     }, [selectedCountryId,countries]);
 
@@ -96,6 +105,7 @@ function App() {
             <Highlight report={report} />
             <Summary historicalCountry={historicalCountry} report={report}/>
             <StatTable rowsData = {lastestCountries} />
+            <VaccineTable rowsData = {vaccineData}/>
             <ScrollTop/>
             <Footer/>
         </Container>
