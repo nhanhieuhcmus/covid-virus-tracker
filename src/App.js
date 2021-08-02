@@ -50,6 +50,7 @@ function App() {
                 },
             },
             StatTable: {
+                title: "Thống kê theo quốc gia",
                 Country: "Quốc gia",
                 Confirmed: "Số ca nhiễm",
                 Recovered: "Số ca phục hồi",
@@ -88,6 +89,7 @@ function App() {
                 },
             },
             StatTable: {
+                title: "Statistics by country",
                 Country: "Country",
                 Confirmed: "Confirmed",
                 Recovered: "Recovered",

@@ -97,7 +97,7 @@ function StatTable({ rowsData, language }) {
     const styles = useStyles();
     return (
         <div className={styles.container}>
-            <Typography variant="h5">Thống kê theo quốc gia</Typography>
+            <Typography variant="h5">{language.title}</Typography>
             <Card className={styles.card}>
                 <CardContent style={{ paddingTop: 0 }}>
                     <Table stickyHeader aria-label="sticky table">
