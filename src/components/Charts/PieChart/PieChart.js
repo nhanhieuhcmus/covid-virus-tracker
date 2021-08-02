@@ -2,8 +2,9 @@ import { Card, CardContent } from "@material-ui/core";
 import HighchartsReact from "highcharts-react-official";
 import Highchart from "highcharts";
 import React, { useEffect, useState } from "react";
+import { LaptopChromebookOutlined } from "@material-ui/icons";
 
-const generateOptions = (data) => {
+const generateOptions = (data, label) => {
     return {
         chart: {
             type: "pie",
@@ -42,19 +43,19 @@ const generateOptions = (data) => {
                 colorByPoint: true,
                 data: [
                     {
-                        name: "Confirmed",
+                        name: label.Confirmed,
                         y: data.cases,
                         // sliced: false,
                         selected: false,
                         color: "rgba(255,0,0,0.6)",
                     },
                     {
-                        name: "Recovered",
+                        name: label.Recovered,
                         y: data.recovered,
                         color: "rgba(0,255,0,0.6)",
                     },
                     {
-                        name: "Deaths",
+                        name: label.Deaths,
                         y: data.deaths,
                         color: "rgba(128,128,128,0.6)",
                     },
@@ -68,11 +69,11 @@ const generateOptions = (data) => {
     };
 };
 
-function PieChart({ data }) {
+function PieChart({ data, language:{label} }) {
     console.log("data in PieChart: ", data);
     const [options, setOptions] = useState({});
     useEffect(() => {
-        setOptions(generateOptions(data));
+        setOptions(generateOptions(data,label));
     }, [data]);
 
     return (

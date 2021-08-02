@@ -12,7 +12,7 @@ import {
     Typography,
 } from "@material-ui/core";
 
-const generateOptions = (data) => {
+const generateOptions = (data, label) => {
     const formatedDate = data.length&&data.map((item) =>
         moment(item.Date).format("DD/MM/YYYY")
     );
@@ -66,17 +66,17 @@ const generateOptions = (data) => {
         },
         series: [
             {
-                name: "Number of confirmed",
+                name: label.Confirmed,
                 data: data.map((item) => item.Confirmed),
                 color: "rgba(255,0,0,0.6)",
             },
             {
-                name: "Number of recovered",
+                name: label.Recovered,
                 data: data.map((item) => item.Recovered),
                 color: "rgba(0,255,0,0.8)",
             },
             {
-                name: "Number of deaths",
+                name: label.Deaths,
                 data: data.map((item) => item.Deaths),
                 color: "rgba(128,128,128,0.6)",
             },
@@ -87,7 +87,7 @@ const generateOptions = (data) => {
     };
 };
 
-function LineChart({ data }) {
+function LineChart({ data, language: {select, label}}) {
     const [options, setOptions] = useState({});
     const [filterType, setFilterType] = useState("30");
     useEffect(()=>{
@@ -106,7 +106,7 @@ function LineChart({ data }) {
                 customData = data;
                 break;
         }
-        setOptions(generateOptions(customData));
+        setOptions(generateOptions(customData,label));
     }, [data, filterType]);
 
     const handleOnChange = (event) => {
@@ -124,9 +124,9 @@ function LineChart({ data }) {
                         value={filterType}
                         onChange={handleOnChange}
                     >
-                        <MenuItem value={"all"}>All the time</MenuItem>
-                        <MenuItem value={"30"}>Last 30 days</MenuItem>
-                        <MenuItem value={"7"}>Last 7 days</MenuItem>
+                        <MenuItem value={"all"}>{select.all}</MenuItem>
+                        <MenuItem value={"30"}>{select._30}</MenuItem>
+                        <MenuItem value={"7"}>{select._7}</MenuItem>
                     </Select>
                 </FormControl>
             </CardContent>

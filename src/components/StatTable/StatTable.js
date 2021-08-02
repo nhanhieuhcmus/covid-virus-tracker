@@ -39,8 +39,11 @@ const StyledTableHead = withStyles((theme) => ({
 }))(TableCell);
 
 const useStyles = makeStyles({
-    card: {
+    container: {
         marginTop: 30,
+    },
+    card: {
+        marginTop: 10,
         maxHeight: 500,
         overflow: "scroll",
     },
@@ -62,17 +65,17 @@ const useStyles = makeStyles({
     confirmedColor: {
         color: "#e53e3e",
         fontSize: 13,
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     recoveredColor: {
         color: "#8ACA2B",
         fontSize: 13,
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     deathsColor: {
         color: "#718096",
         fontSize: 13,
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
     // "@media (max-width:780px)": {
 
@@ -90,85 +93,96 @@ const useStyles = makeStyles({
     },
 });
 
-function StatTable({ rowsData }) {
+function StatTable({ rowsData, language }) {
     const styles = useStyles();
     return (
-        <Card className={styles.card}>
-            <CardContent style={{ paddingTop: 0 }}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableHead
-                                className={styles.flag}
-                            ></StyledTableHead>
-                            <StyledTableHead className={styles.column}>
-                                Country
-                            </StyledTableHead>
-                            <StyledTableHead align="right">
-                                Confirmed
-                            </StyledTableHead>
-                            <StyledTableHead align="right">
-                                Recovered
-                            </StyledTableHead>
-                            <StyledTableHead align="right">
-                                Deaths
-                            </StyledTableHead>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rowsData.map(
-                            ({
-                                flag,
-                                country,
-                                cases,
-                                recovered,
-                                deaths,
-                                todayCases,
-                                todayRecovered,
-                                todayDeaths,
-                            }) => (
-                                <StyledTableRow key={country}>
-                                    <TableCell className={styles.flag}>
-                                        <img src={flag} className={styles.flag}/>
-                                    </TableCell>
-                                    <TableCell
-                                        className={styles.column}
-                                        component="th"
-                                        scope="row"
-                                    >
-                                        {country}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {cases.toLocaleString()}
-                                        <Typography
-                                            className={styles.confirmedColor}
+        <div className={styles.container}>
+            <Typography variant="h5">Thống kê theo quốc gia</Typography>
+            <Card className={styles.card}>
+                <CardContent style={{ paddingTop: 0 }}>
+                    <Table stickyHeader aria-label="sticky table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableHead
+                                    className={styles.flag}
+                                ></StyledTableHead>
+                                <StyledTableHead className={styles.column}>
+                                    {language.Country}
+                                </StyledTableHead>
+                                <StyledTableHead align="right">
+                                    {language.Confirmed}
+                                </StyledTableHead>
+                                <StyledTableHead align="right">
+                                    {language.Recovered}
+                                </StyledTableHead>
+                                <StyledTableHead align="right">
+                                    {language.Deaths}
+                                </StyledTableHead>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rowsData.map(
+                                ({
+                                    flag,
+                                    country,
+                                    cases,
+                                    recovered,
+                                    deaths,
+                                    todayCases,
+                                    todayRecovered,
+                                    todayDeaths,
+                                }) => (
+                                    <StyledTableRow key={country}>
+                                        <TableCell className={styles.flag}>
+                                            <img
+                                                src={flag}
+                                                className={styles.flag}
+                                            />
+                                        </TableCell>
+                                        <TableCell
+                                            className={styles.column}
+                                            component="th"
+                                            scope="row"
                                         >
-                                            + {todayCases.toLocaleString()}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {recovered.toLocaleString()}
-                                        <Typography
-                                            className={styles.recoveredColor}
-                                        >
-                                            + {todayRecovered.toLocaleString()}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {deaths.toLocaleString()}
-                                        <Typography
-                                            className={styles.deathsColor}
-                                        >
-                                            + {todayDeaths.toLocaleString()}
-                                        </Typography>
-                                    </TableCell>
-                                </StyledTableRow>
-                            )
-                        )}
-                    </TableBody>
-                </Table>
-            </CardContent>
-        </Card>
+                                            {country}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {cases.toLocaleString()}
+                                            <Typography
+                                                className={
+                                                    styles.confirmedColor
+                                                }
+                                            >
+                                                + {todayCases.toLocaleString()}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {recovered.toLocaleString()}
+                                            <Typography
+                                                className={
+                                                    styles.recoveredColor
+                                                }
+                                            >
+                                                +{" "}
+                                                {todayRecovered.toLocaleString()}
+                                            </Typography>
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {deaths.toLocaleString()}
+                                            <Typography
+                                                className={styles.deathsColor}
+                                            >
+                                                + {todayDeaths.toLocaleString()}
+                                            </Typography>
+                                        </TableCell>
+                                    </StyledTableRow>
+                                )
+                            )}
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
+        </div>
     );
 }
 

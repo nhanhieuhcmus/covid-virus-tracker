@@ -28,8 +28,9 @@ const useStyles = makeStyles({
     },
 });
 
-export default function CountryPicker({ selectedCountryId, handleCountryChange, countries }) {
+export default function CountryPicker({ selectedCountryId, handleCountryChange, countries, language }) {
     console.log("CountryPicker render");
+    console.log("language: ", language);
     const styles = useStyles();
     // const defaultValue = countries.map(country=>country.ISO2.toLowerCase()===selectedCountryId);
     const hardcodeDefaultValue = {
@@ -69,7 +70,7 @@ export default function CountryPicker({ selectedCountryId, handleCountryChange, 
                     <TextField
                         {...params}
                         value={params}
-                        label="Select country ..."
+                        label={language.label}
                         variant="outlined"
                         size="small"
                     />

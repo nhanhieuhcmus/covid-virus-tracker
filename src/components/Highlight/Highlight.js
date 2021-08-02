@@ -2,23 +2,23 @@ import { Grid } from "@material-ui/core";
 import React from "react";
 import HighlightCard from "./HighlightCard";
 
-function Highlight({ report }) {
+function Highlight({ report, language }) {
     console.log("Highlight render");
     const summary = [
         {
-            title: "Confirmed",
+            title: language.Confirmed,
             total: report.cases,
             today: report.todayCases,
             type: "confirmed",
         },
         {
-            title: "Recovered",
+            title: language.Recovered,
             total: report.recovered,
             today: report.todayRecovered,
             type: "recovered",
         },
         {
-            title: "Deaths",
+            title: language.Deaths,
             total: report.deaths,
             today: report.todayDeaths,
             type: "deaths",
@@ -34,6 +34,7 @@ function Highlight({ report }) {
                         total = {item.total}
                         today={item.today}
                         type={item.type}
+                        language = {language}
                     />
                 </Grid>
             ))}

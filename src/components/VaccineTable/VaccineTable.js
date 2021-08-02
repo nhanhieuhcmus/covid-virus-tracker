@@ -7,6 +7,7 @@ import {
     TableCell,
     TableHead,
     TableRow,
+    Typography,
     withStyles,
 } from "@material-ui/core";
 import React from "react";
@@ -38,8 +39,11 @@ const StyledTableHead = withStyles((theme) => ({
 }))(TableCell);
 
 const useStyles = makeStyles({
-    card: {
+    container: {
         marginTop: 30,
+    },
+    card: {
+        marginTop: 10,
         maxHeight: 500,
         overflow: "scroll",
     },
@@ -86,73 +90,107 @@ const useStyles = makeStyles({
     },
 });
 
-function VaccineTable({ rowsData }) {
+function VaccineTable({ rowsData, language }) {
+    console.log("language in VaccineTable: ", language);
     const styles = useStyles();
     return (
-        <Card className={styles.card}>
-            <CardContent style={{ paddingTop: 0 }}>
-                <Table stickyHeader aria-label="sticky table">
-                    <TableHead>
-                        <TableRow>
-                            <StyledTableHead>Tỉnh</StyledTableHead>
-                            <StyledTableHead className={styles.column} align="right">
-                                Phân bổ dự kiến
-                            </StyledTableHead>
-                            <StyledTableHead align="right">Phân bổ thực tế</StyledTableHead>
-                            <StyledTableHead align="right">Dân số {">"}= 18t</StyledTableHead>
-                            <StyledTableHead align="right">Số liều đã tiêm</StyledTableHead>
-                            <StyledTableHead align="right">Tỉ lệ dự kiến/ dân số ({">"}= 18t)</StyledTableHead>
-                            <StyledTableHead align="right">Tỉ lệ thực tế/ dân số ({">"}= 18t)</StyledTableHead>
-                            <StyledTableHead align="right">Tỉ lệ tiêm {">"}= 1 mũi ({">"}= 18t)</StyledTableHead>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rowsData.map(
-                            ({
-                                id,
-                                province,
-                                expected,
-                                real,
-                                population18,
-                                injection,
-                                expectedRate,
-                                injectionRate,
-                                injection1Rate,
-                            }) => (
-                                <StyledTableRow key={id}>
-                                    <TableCell
-                                        className={styles.column}
-                                        component="th"
-                                        scope="row"
-                                    >
-                                        {province}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {expected}
-                                    </TableCell>
-                                    <TableCell align="right"><b>{real}</b></TableCell>
-                                    <TableCell align="right">
-                                        {population18}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <b>{injection}</b>
-                                    </TableCell>
-                                    <TableCell className={styles.expectedRate} align="right">
-                                        <b>{expectedRate}</b>
-                                    </TableCell>
-                                    <TableCell className={styles.injectionRate} align="right">
-                                        <b>{injectionRate}</b>
-                                    </TableCell>
-                                    <TableCell className={styles.injection1Rate} align="right">
-                                        <b>{injection1Rate}</b>
-                                    </TableCell>
-                                </StyledTableRow>
-                            )
-                        )}
-                    </TableBody>
-                </Table>
-            </CardContent>
-        </Card>
+        <div className={styles.container}>
+            <Typography component="h2" variant="h5">
+                Thống kê vắc-xin theo địa phương
+            </Typography>
+            <Card className={styles.card}>
+                <CardContent style={{ paddingTop: 0 }}>
+                    <Table stickyHeader aria-label="sticky table">
+                        <TableHead>
+                            <TableRow>
+                                <StyledTableHead>
+                                    {language.Province}
+                                </StyledTableHead>
+                                <StyledTableHead
+                                    className={styles.column}
+                                    align="right"
+                                >
+                                    {language.Expected}
+                                </StyledTableHead>
+                                <StyledTableHead align="right">
+                                    {language.Real}
+                                </StyledTableHead>
+                                <StyledTableHead align="right">
+                                    {language.Population18}
+                                </StyledTableHead>
+                                <StyledTableHead align="right">
+                                    {language.Injected}
+                                </StyledTableHead>
+                                <StyledTableHead align="right">
+                                    {language.ExpectedRate}
+                                </StyledTableHead>
+                                <StyledTableHead align="right">
+                                    {language.InjectedRate}
+                                </StyledTableHead>
+                                <StyledTableHead align="right">
+                                    {language.Injected1}
+                                </StyledTableHead>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rowsData.map(
+                                ({
+                                    id,
+                                    province,
+                                    expected,
+                                    real,
+                                    population18,
+                                    injection,
+                                    expectedRate,
+                                    injectionRate,
+                                    injection1Rate,
+                                }) => (
+                                    <StyledTableRow key={id}>
+                                        <TableCell
+                                            className={styles.column}
+                                            component="th"
+                                            scope="row"
+                                        >
+                                            {province}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {expected}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            <b>{real}</b>
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {population18}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            <b>{injection}</b>
+                                        </TableCell>
+                                        <TableCell
+                                            className={styles.expectedRate}
+                                            align="right"
+                                        >
+                                            <b>{expectedRate}</b>
+                                        </TableCell>
+                                        <TableCell
+                                            className={styles.injectionRate}
+                                            align="right"
+                                        >
+                                            <b>{injectionRate}</b>
+                                        </TableCell>
+                                        <TableCell
+                                            className={styles.injection1Rate}
+                                            align="right"
+                                        >
+                                            <b>{injection1Rate}</b>
+                                        </TableCell>
+                                    </StyledTableRow>
+                                )
+                            )}
+                        </TableBody>
+                    </Table>
+                </CardContent>
+            </Card>
+        </div>
     );
 }
 

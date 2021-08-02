@@ -21,10 +21,81 @@ import VaccineTable from "./components/VaccineTable/VaccineTable";
 function App() {
     const [countries, setCountries] = useState([]);
     const [selectedCountryId, setSelectedCountryId] = useState("");
-    const [report, setReport] = useState([]);
+    const [report, setReport] = useState({});
     const [historicalCountry, setHistoricalCountry] = useState([]);
     const [lastestCountries, setLastestCountries] = useState([]);
     const [vaccineData, setVaccineData] = useState([]);
+    const [language, setLanguage] = useState("VN");
+
+    const languages = {
+        VN: {
+            CountryPicker: {
+                label: "Chọn quốc gia ...",
+            },
+            Highlight: {
+                Confirmed: "Nhiễm bệnh",
+                Recovered: "Phục hồi",
+                Deaths: "Tử vong",
+            },
+            Summary: {
+                select: {
+                    all: "Tất cả",
+                    _30: "30 ngày gần nhất",
+                    _7: "7 ngày gần nhất",
+                },
+                label: {
+                    Confirmed: "Nhiễm bệnh",
+                    Recovered: "Phục hồi",
+                    Deaths: "Tử vong",
+                },
+            },
+            StatTable: {
+                Country: "Quốc gia",
+                Confirmed: "Số ca nhiễm",
+                Recovered: "Số ca phục hồi",
+                Deaths: "Số ca tử vong",
+            },
+            VaccineTable: {
+                Province: "Tỉnh",
+                Expected: "Phân bổ dự kiến",
+                Real: "Phân bổ thực tế",
+                Population18: "Dân số >= 18t",
+                Injected: "Số liều đã tiêm",
+                ExpectedRate: "Tỉ lệ dự kiến/ dân số (>= 18t)",
+                InjectedRate: "Tỉ lệ thực tế/ dân số (>= 18t)",
+                Injected1: "Tỉ lệ tiêm >= 1 mũi (>= 18t)",
+            },
+        },
+        EN: {
+            CountryPicker: {
+                label: "Select country ...",
+            },
+            Highlight: {
+                Confirmed: "Confirmed",
+                Recovered: "Recovered",
+                Deaths: "Deaths",
+            },
+            Summary: {
+                select: {
+                    all: "All the time",
+                    _30: "The last 30 days",
+                    _7: "The last 7 days",
+                },
+                label: {
+                    Confirmed: "Confirmed",
+                    Recovered: "Recovered",
+                    Deaths: "Deaths",
+                },
+            },
+            StatTable: {
+                Country: "Country",
+                Confirmed: "Confirmed",
+                Recovered: "Recovered",
+                Deaths: "Deaths",
+            },
+        },
+    };
+
     useEffect(() => {
         console.log("useEffect all countries call");
         getCountries().then((res) => {
@@ -38,6 +109,7 @@ function App() {
             setCountries(destructureCountries);
             // // default selection
             setSelectedCountryId("VN"); // default selection
+            setLanguage("VN"); // default language
             const destructureLastestCountries = res.data.map(
                 ({
                     country,
@@ -92,10 +164,15 @@ function App() {
             });
         }
         if (selectedCountryId === "VN") {
+            // only call Vaccine data for VN
             getVaccineData().then((res) => {
                 console.log("getVaccineData: ", res);
                 setVaccineData(res.data);
             });
+            setLanguage("VN");
+        } else {
+            // set the others (!=VN) language is English
+            setLanguage("EN");
         }
         console.log("useEffect one country done");
     }, [selectedCountryId, countries]);
@@ -109,19 +186,40 @@ function App() {
                     alt="logo"
                 />
                 <Typography>{moment().format("LLL")}</Typography>
-
-                <CountryPicker
-                    selectedCountryId={selectedCountryId}
-                    countries={countries}
-                    handleCountryChange={handleCountryChange}
-                />
+                {countries.length && selectedCountryId && (
+                    <CountryPicker
+                        selectedCountryId={selectedCountryId}
+                        countries={countries}
+                        handleCountryChange={handleCountryChange}
+                        language={languages[language].CountryPicker}
+                    />
+                )}
             </div>
+            {Object.keys(report).length && (
+                <Highlight
+                    report={report}
+                    language={languages[language].Highlight}
+                />
+            )}
+            {Object.keys(report).length && historicalCountry.length && (
+                <Summary
+                    historicalCountry={historicalCountry}
+                    report={report}
+                    language={languages[language].Summary}
+                />
+            )}
+            {lastestCountries.length && (
+                <StatTable
+                    rowsData={lastestCountries}
+                    language={languages[language].StatTable}
+                />
+            )}
 
-            <Highlight report={report} />
-            <Summary historicalCountry={historicalCountry} report={report} />
-            <StatTable rowsData={lastestCountries} />
-            {selectedCountryId === "VN" && (
-                <VaccineTable rowsData={vaccineData} />
+            {selectedCountryId === "VN" && vaccineData.length && (
+                <VaccineTable
+                    rowsData={vaccineData}
+                    language={languages["VN"].VaccineTable}
+                />
             )}
             <ScrollTop />
             <Footer />
