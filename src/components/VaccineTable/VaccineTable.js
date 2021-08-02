@@ -130,12 +130,12 @@ function VaccineTable({ rowsData }) {
                                     <TableCell align="right">
                                         {expected}
                                     </TableCell>
-                                    <TableCell align="right">{real}</TableCell>
+                                    <TableCell align="right"><b>{real}</b></TableCell>
                                     <TableCell align="right">
                                         {population18}
                                     </TableCell>
                                     <TableCell align="right">
-                                        {injection}
+                                        <b>{injection}</b>
                                     </TableCell>
                                     <TableCell className={styles.expectedRate} align="right">
                                         <b>{expectedRate}</b>
