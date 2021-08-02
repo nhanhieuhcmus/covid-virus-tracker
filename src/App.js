@@ -37,9 +37,18 @@ function App() {
             // console.log("destructureCountries: ", destructureCountries);
             setCountries(destructureCountries);
             // // default selection
-            setSelectedCountryId("vn"); // default selection
+            setSelectedCountryId("VN"); // default selection
             const destructureLastestCountries = res.data.map(
-                ({country,countryInfo:{flag} ,cases, recovered, deaths, todayCases, todayRecovered, todayDeaths}) => ({
+                ({
+                    country,
+                    countryInfo: { flag },
+                    cases,
+                    recovered,
+                    deaths,
+                    todayCases,
+                    todayRecovered,
+                    todayDeaths,
+                }) => ({
                     country,
                     flag,
                     cases,
@@ -47,10 +56,13 @@ function App() {
                     deaths,
                     todayCases,
                     todayRecovered,
-                    todayDeaths
+                    todayDeaths,
                 })
             );
-            console.log("destructureLastestCountries: ", destructureLastestCountries);
+            console.log(
+                "destructureLastestCountries: ",
+                destructureLastestCountries
+            );
             setLastestCountries(destructureLastestCountries);
         });
         console.log("useEffect all countries done");
@@ -79,20 +91,23 @@ function App() {
                 setHistoricalCountry(res.data);
             });
         }
-        if (selectedCountryId==="vn"){
-            getVaccineData().then(res=>{
+        if (selectedCountryId === "VN") {
+            getVaccineData().then((res) => {
                 console.log("getVaccineData: ", res);
                 setVaccineData(res.data);
             });
         }
         console.log("useEffect one country done");
-    }, [selectedCountryId,countries]);
-
+    }, [selectedCountryId, countries]);
 
     return (
         <Container className={styles.container}>
             <div className={styles.header}>
-                <img className={styles.logo} src="https://drive.google.com/uc?view&id=1bwfj4jVjGBBuARbu7j8Xo8nx0kVrgkML" alt="logo" />
+                <img
+                    className={styles.logo}
+                    src="https://drive.google.com/uc?view&id=1bwfj4jVjGBBuARbu7j8Xo8nx0kVrgkML"
+                    alt="logo"
+                />
                 <Typography>{moment().format("LLL")}</Typography>
 
                 <CountryPicker
@@ -103,11 +118,13 @@ function App() {
             </div>
 
             <Highlight report={report} />
-            <Summary historicalCountry={historicalCountry} report={report}/>
-            <StatTable rowsData = {lastestCountries} />
-            {selectedCountryId==='vn'&& <VaccineTable rowsData = {vaccineData}/>}
-            <ScrollTop/>
-            <Footer/>
+            <Summary historicalCountry={historicalCountry} report={report} />
+            <StatTable rowsData={lastestCountries} />
+            {selectedCountryId === "VN" && (
+                <VaccineTable rowsData={vaccineData} />
+            )}
+            <ScrollTop />
+            <Footer />
         </Container>
     );
 }

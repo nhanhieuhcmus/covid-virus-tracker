@@ -62,14 +62,17 @@ const useStyles = makeStyles({
     confirmedColor: {
         color: "#e53e3e",
         fontSize: 13,
+        fontWeight: 'bold',
     },
     recoveredColor: {
         color: "#8ACA2B",
         fontSize: 13,
+        fontWeight: 'bold',
     },
     deathsColor: {
         color: "#718096",
         fontSize: 13,
+        fontWeight: 'bold',
     },
     // "@media (max-width:780px)": {
 
