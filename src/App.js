@@ -105,7 +105,7 @@ function App() {
             <Highlight report={report} />
             <Summary historicalCountry={historicalCountry} report={report}/>
             <StatTable rowsData = {lastestCountries} />
-            <VaccineTable rowsData = {vaccineData}/>
+            {selectedCountryId==='vn'&& <VaccineTable rowsData = {vaccineData}/>}
             <ScrollTop/>
             <Footer/>
         </Container>
