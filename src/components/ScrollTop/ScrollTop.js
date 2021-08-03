@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     
 });
 
-function ScrollTop() {
+function ScrollTop({language}) {
     const styles = useStyles();
     const mybutton = document.getElementById("myBtn");
     window.onscroll =  () => {
@@ -48,8 +48,8 @@ function ScrollTop() {
     return (
         <div>
             <button id="myBtn" className={styles.myBtn} onClick={topFunction}>
-                Home
-                &#x2191;
+                {language.innerText}
+                &nbsp; &#x2191;
             </button>
         </div>
     );
