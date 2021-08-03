@@ -1,7 +1,6 @@
 import { Container, Typography } from "@material-ui/core";
 import moment from "moment";
 import "moment/locale/vi";
-import "moment/locale/en-au";
 import { useEffect, useState } from "react";
 import {
     getCountries,
@@ -107,7 +106,7 @@ function App() {
         } else {
             // set the others (!=VN) language is English
             setLanguage("EN");
-            moment.locale("en-au");
+            moment.locale("en");
         }
         console.log("useEffect one country done");
     }, [selectedCountryId, countries]);
